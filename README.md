@@ -7,3 +7,5 @@
 → Custom gradient (2-6 colors + speed in ms) 
 /info → Show this help 
 💡 Changes are visible only to other mod users.
+
+Download here: https://greasyfork.org/en/scripts/564247-rie-s-mod

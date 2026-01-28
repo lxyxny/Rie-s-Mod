@@ -64,7 +64,7 @@
     function applyGradientEffect(el, gradient) {
         if (el.dataset.gradientApplied) return;
         el.dataset.gradientApplied = 'true';
-        let progress = Math.random() * 360;
+        let progress = 0;
 
         setInterval(() => {
             if (!el.isConnected) return;
@@ -72,7 +72,6 @@
             el.style.backgroundImage = createFlowingGradient(gradient.colors, progress);
             el.style.backgroundClip = "text";
             el.style.webkitBackgroundClip = "text";
-            el.style.color = "transparent";
         }, gradient.speed);
     }
 
@@ -277,23 +276,22 @@
                     uw.displayInChat("Usage: /nick <player> <nickname>", "#FF0000", "#FF0000");
                     return "";
                 }
-                const playerName = parts[0];
-                const nickname = parts.slice(1).join(" ");
-                if (nickname.length > 20) {
-                    uw.displayInChat("Nickname too long (max 20 chars).", "#FF0000", "#FF0000");
-                    return "";
-                }
+        const playerName = parts[0];
+        const nickname = parts.slice(1).join(" ");
+        if (nickname.length > 20) {
+            uw.displayInChat("Nickname too long (max 20 chars).", "#FF0000", "#FF0000");
+            return "";
+        }
                 const playerId = findPlayerIdByName(playerName);
                 if (!playerId) {
                     uw.displayInChat(`Player "${playerName}" not found.`, "#FF0000", "#FF0000");
                     return "";
                 }
-                nicknames[playerId] = nickname;
-                broadcastNickname(playerId, nickname);
-                updateAllDOM(uw.Gdocument);
-                uw.displayInChat(`Nicknamed ${uw.playerids[playerId]?.userName || "Player"} as "${nickname}"`, "#FFD700", "#FFA500");
-                return "";
-            }
+            nicknames[playerId] = nickname;
+            broadcastNickname(playerId, nickname);
+            uw.displayInChat(`Nicknamed ${uw.playerids[playerId]?.userName || "Player"} as "${nickname}"`, "#FFD700", "#FFA500");
+            return "";
+        }
 
             // /m (private message)
             if (chat_val.startsWith('/m ')) {
@@ -346,15 +344,15 @@
                     return "";
                 }
 
-                currentGradient = {
-                    colors: colorStrings.map(parseColor),
-                    speed: speed
-                };
-                broadcastCustomization();
-                updateAllDOM(uw.Gdocument);
-                uw.displayInChat(`Custom gradient applied (${colorStrings.length} colors).`, "#FFD700", "#FFA500");
-                return "";
-            }
+            currentGradient = {
+                colors: colorStrings.map(parseColor),
+                speed: speed
+            };
+            broadcastCustomization();
+            updateAllDOM(uw.Gdocument);
+            uw.displayInChat(`Custom gradient applied (${colorStrings.length} colors).`, "#FFD700", "#FFA500");
+            return "";
+        }
 
             // /info
             if (chat_val === '/info') {
